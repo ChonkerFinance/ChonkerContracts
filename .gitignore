@@ -2,3 +2,6 @@ node_modules/
 *.lock
 .openzeppelin/
 package-lock.json
+
+contracts/ChonkNFT.sol
+contracts/GenesisPool.sol
