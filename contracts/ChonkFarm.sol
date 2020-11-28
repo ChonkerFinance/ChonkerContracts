@@ -567,7 +567,7 @@ contract ChonkFarm is Ownable, ReentrancyGuard {
     NFTAddress = _address;
   }
 
-  mapping(address => uint256) private brainBalance;
+  mapping(address => uint256) private chonkBalance;
   mapping(address => uint256) public lastUpdateTime;
   mapping(address => uint256) public points;
 
@@ -583,7 +583,7 @@ contract ChonkFarm is Ownable, ReentrancyGuard {
   }
 
   function balanceOf(address account) public view returns (uint256) {
-    return brainBalance[account];
+    return chonkBalance[account];
   }
 
   /*
@@ -613,7 +613,7 @@ contract ChonkFarm is Ownable, ReentrancyGuard {
   function stake(uint256 amount) public updateReward(_msgSender()) nonReentrant {
     require(amount.add(balanceOf(_msgSender())) >= 2000000000000000000, "Cannot stake less than 2 CHONK");
     require(amount.add(balanceOf(_msgSender())) <= 10000000000000000000, "Cannot stake more than 10 CHONK");
-    brainBalance[_msgSender()] = brainBalance[_msgSender()].add(amount);
+    chonkBalance[_msgSender()] = chonkBalance[_msgSender()].add(amount);
     IERC20(ChonkAddress).transferFrom(_msgSender(), address(this), amount);
     emit Staked(_msgSender(), amount);
   }
@@ -622,7 +622,7 @@ contract ChonkFarm is Ownable, ReentrancyGuard {
     require(amount > 0, "Cannot withdraw 0");
     require(amount <= balanceOf(_msgSender()), "Cannot withdraw more than balance");
     IERC20(ChonkAddress).transfer(_msgSender(), amount);
-    brainBalance[_msgSender()] = brainBalance[_msgSender()].sub(amount);
+    chonkBalance[_msgSender()] = chonkBalance[_msgSender()].sub(amount);
     emit Withdrawn(_msgSender(), amount);
   }
 
